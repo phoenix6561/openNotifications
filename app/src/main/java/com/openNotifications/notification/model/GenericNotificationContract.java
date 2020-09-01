@@ -12,14 +12,16 @@ public final class GenericNotificationContract {
         public static final String TABLE_NAME = "notifications";
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_TEXT = "text";
+        public static final String COLUMN_NAME_SERVICE = "service_id";
+
 
 
         public static String getCreateTableStatment(){
            String sql = "CREATE TABLE " + GenericNotification.TABLE_NAME + " (" +
                     GenericNotification._ID + " INTEGER PRIMARY KEY," +
                     GenericNotification.COLUMN_NAME_TITLE + " TEXT," +
-                    GenericNotification.COLUMN_NAME_TEXT + " TEXT)";
-
+                    GenericNotification.COLUMN_NAME_TEXT + " TEXT ," +
+                     GenericNotification.COLUMN_NAME_SERVICE + " TEXT )" ;
             return sql;
         }
 
@@ -41,9 +43,15 @@ public final class GenericNotificationContract {
         public static String getColumnNameText() {
             return COLUMN_NAME_TEXT;
         }
+
+        public static String getColumnNameService() {
+            return COLUMN_NAME_SERVICE;
+        }
         public static String getColumnNameId() {
             return _ID;
         }
+
+
 
     }
 

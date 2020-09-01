@@ -14,15 +14,15 @@ import android.os.Bundle;
 
 import com.openNotifications.R;
 
-public class NotificationService   {
+public class NotificationViewService {
 
     private String channelID = "0";
     Context context;
 
-    public NotificationService(String channelID, Context context ){
+    public NotificationViewService(String channelID, Context context , String notificationChannel){
         this.channelID = channelID;
         this.context = context;
-
+        this.createNotificationChannel(notificationChannel );
     }
 
 
@@ -55,10 +55,10 @@ return builder;
     public void showNotification(String title,String text,int id){
         NotificationCompat.Builder builder = this.buildNotification(title,text);
 
-        this.createNotificationChannel("test"  );
+
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
-// notificationId is a unique int for each notification that you must define
+        // notificationId is a unique int for each notification that you must define
         notificationManager.notify(id, builder.build());
 
     }

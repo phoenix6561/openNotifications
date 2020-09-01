@@ -8,6 +8,8 @@ public class Notification {
 
     private String title;
 
+    private int serviceId;
+
     public int getId() {
         return id;
     }
@@ -30,5 +32,13 @@ public class Notification {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(int serviceId) {
+        this.serviceId = serviceId;
     }
 }
