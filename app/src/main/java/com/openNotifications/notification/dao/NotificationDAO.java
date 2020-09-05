@@ -43,12 +43,7 @@ values.put(GenericNotificationContract.GenericNotification.getColumnNameTitle(),
 }
 
 public List<Notification> findAll(){
-    String[] projection = {
-            GenericNotificationContract.GenericNotification.getColumnNameId(),
-            GenericNotificationContract.GenericNotification.getColumnNameTitle(),
-            GenericNotificationContract.GenericNotification.getColumnNameText(),
-            GenericNotificationContract.GenericNotification.getColumnNameService()
-    };
+    String[] projection = getNotificationProjection();
 
     Cursor cursor = notificationReadDatabase.query(
             GenericNotificationContract.GenericNotification.getTableName(),   // The table to query
@@ -61,30 +56,38 @@ public List<Notification> findAll(){
     );
 
 
-    List<Notification> results= new ArrayList<Notification>();
-
-    while(cursor.moveToNext()) {
-        Notification notification = new Notification();
-        notification.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(GenericNotificationContract.GenericNotification.getColumnNameTitle())));
-        notification.setId(cursor.getInt(cursor.getColumnIndexOrThrow(GenericNotificationContract.GenericNotification.getColumnNameId())));
-        notification.setText(cursor.getString(cursor.getColumnIndexOrThrow(GenericNotificationContract.GenericNotification.getColumnNameText())));
-        notification.setServiceId(cursor.getColumnIndexOrThrow(GenericNotificationContract.GenericNotification.getColumnNameService()));
-
-
-        results.add(notification);
-    }
-    cursor.close();
+    List<Notification> results = parceCursorToResults(cursor);
 
     return results;
 
 
 }
 
+    private String[] getNotificationProjection() {
+        return new String[]{
+                GenericNotificationContract.GenericNotification.getColumnNameId(),
+                GenericNotificationContract.GenericNotification.getColumnNameTitle(),
+                GenericNotificationContract.GenericNotification.getColumnNameText(),
+                GenericNotificationContract.GenericNotification.getColumnNameService()
+        };
+    }
+
+    private List<Notification> parceCursorToResults(Cursor cursor) {
+        List<Notification> results= new ArrayList<Notification>();
+
+        while(cursor.moveToNext()) {
+            Notification notification = new Notification();
+            notification.setTitle(cursor.getString(cursor.getColumnIndexOrThrow(GenericNotificationContract.GenericNotification.getColumnNameTitle())));
+            notification.setId(cursor.getInt(cursor.getColumnIndexOrThrow(GenericNotificationContract.GenericNotification.getColumnNameId())));
+            notification.setText(cursor.getString(cursor.getColumnIndexOrThrow(GenericNotificationContract.GenericNotification.getColumnNameText())));
+            notification.setServiceId(cursor.getColumnIndexOrThrow(GenericNotificationContract.GenericNotification.getColumnNameService()));
 
 
-
-
-
+            results.add(notification);
+        }
+        cursor.close();
+        return results;
+    }
 
 
 }
